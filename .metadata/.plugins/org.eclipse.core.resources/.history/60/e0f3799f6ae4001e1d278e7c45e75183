@@ -1,5 +1,0 @@
-package dev.adil.productservice.repository;
-
-public interface ProductRepository {
-
-}
