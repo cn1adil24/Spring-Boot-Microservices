@@ -1,0 +1,5 @@
+package dev.adil.productservice.controller;
+
+public class ProductController {
+
+}
