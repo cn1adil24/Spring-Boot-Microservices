@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import dev.adil.productservice.ddo.ProductRequest;
-import dev.adil.productservice.ddo.ProductResponse;
+import dev.adil.productservice.dto.ProductRequest;
+import dev.adil.productservice.dto.ProductResponse;
 import dev.adil.productservice.service.ProductService;
 
 @RestController

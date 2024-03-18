@@ -1,4 +1,4 @@
-package dev.adil.productservice.ddo;
+package dev.adil.productservice.dto;
 
 import java.math.BigDecimal;
 

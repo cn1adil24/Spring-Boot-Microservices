@@ -21,8 +21,8 @@ import org.testcontainers.junit.jupiter.Container;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import dev.adil.productservice.ddo.ProductRequest;
-import dev.adil.productservice.ddo.ProductResponse;
+import dev.adil.productservice.dto.ProductRequest;
+import dev.adil.productservice.dto.ProductResponse;
 import dev.adil.productservice.repository.ProductRepository;
 
 @SpringBootTest

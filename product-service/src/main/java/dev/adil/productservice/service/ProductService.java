@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import dev.adil.productservice.ddo.ProductRequest;
-import dev.adil.productservice.ddo.ProductResponse;
+import dev.adil.productservice.dto.ProductRequest;
+import dev.adil.productservice.dto.ProductResponse;
 import dev.adil.productservice.model.Product;
 import dev.adil.productservice.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
