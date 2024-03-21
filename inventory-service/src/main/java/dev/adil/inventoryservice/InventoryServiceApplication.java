@@ -15,6 +15,7 @@ public class InventoryServiceApplication {
 		SpringApplication.run(InventoryServiceApplication.class, args);
 	}
 	
+	/*
 	@Bean
 	public CommandLineRunner loadData(InventoryRepository inventoryRepository) {
 		return args -> {
@@ -29,5 +30,5 @@ public class InventoryServiceApplication {
 			inventoryRepository.save(inventory1);
 			inventoryRepository.save(inventory2);
 		};
-	}
+	}*/
 }
