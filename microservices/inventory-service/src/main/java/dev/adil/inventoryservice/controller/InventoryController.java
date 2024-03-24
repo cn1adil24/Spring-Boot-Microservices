@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import dev.adil.inventoryservice.InventoryService;
+import dev.adil.inventoryservice.service.InventoryService;
 
 @RestController
 @RequestMapping("/api/v1/inventory")
