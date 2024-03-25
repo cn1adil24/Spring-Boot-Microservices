@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dev.adil.orderservice.dto.OrderRequest;
 import dev.adil.orderservice.dto.OrderResponse;
+import dev.adil.orderservice.exception.OutOfStockException;
 import dev.adil.orderservice.service.OrderService;
 
 @RestController
@@ -24,8 +25,12 @@ public class OrderController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public String placeOrder(@RequestBody OrderRequest orderRequest) {
-		orderService.addOrder(orderRequest);
-		return "Order placed successfully";
+		try {
+			orderService.addOrder(orderRequest);
+			return "Order placed successfully";
+		} catch(OutOfStockException ex) {
+			return ex.getMessage();
+		}
 	}
 	
 	@GetMapping

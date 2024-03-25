@@ -13,6 +13,7 @@ import dev.adil.orderservice.dto.InventoryResponse;
 import dev.adil.orderservice.dto.OrderLineItemsDto;
 import dev.adil.orderservice.dto.OrderRequest;
 import dev.adil.orderservice.dto.OrderResponse;
+import dev.adil.orderservice.exception.OutOfStockException;
 import dev.adil.orderservice.model.Order;
 import dev.adil.orderservice.model.OrderLineItems;
 import dev.adil.orderservice.repository.OrderRepository;
@@ -53,15 +54,17 @@ public class OrderService {
 				.bodyToMono(InventoryResponse[].class)
 				.block();
 		
-		boolean allProductsInResponse = Arrays.stream(inventoryResponseArray)
-											.allMatch(InventoryResponse::getIsInStock);
+		List<String> missingProducts = Arrays.stream(inventoryResponseArray)
+											.filter(inventoryResponse -> !inventoryResponse.getIsInStock())
+											.map(inventoryResponse -> inventoryResponse.getSkuCode())
+											.toList();
 		
-		if (allProductsInResponse) {
+		if (missingProducts.isEmpty()) {
 			orderRepository.save(order);
 			log.info("Order {} is saved.", order.getId());
 		}
 		else {
-			throw new IllegalArgumentException("Product is not in stock, please try again later.");
+			throw new OutOfStockException("The following products are not in stock: " + String.join(", ", missingProducts));
 		}
 	}
 
