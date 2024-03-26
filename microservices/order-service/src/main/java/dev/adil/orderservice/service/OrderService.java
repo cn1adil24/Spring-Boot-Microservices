@@ -26,8 +26,8 @@ public class OrderService {
 	@Autowired
 	private OrderRepository orderRepository;
 	@Autowired
-	private WebClient webClient;
-	private final String inventoryServiceUri = "http://localhost:8082/api/v1/inventory";
+	private WebClient.Builder webClientBuilder;
+	private final String inventoryServiceUri = "http://inventory-service/api/v1/inventory";
 	
 	public void addOrder(OrderRequest orderRequest) {		
 		List<OrderLineItems> orderLineItems = orderRequest.getOrderLineItemsList()
@@ -45,7 +45,7 @@ public class OrderService {
 										.map(OrderLineItems::getSkuCode)	//equivalent to 'orderLineItem -> orderLineItem.getSkuCode()'
 										.toList();
 		
-		InventoryResponse[] inventoryResponseArray = webClient.get()
+		InventoryResponse[] inventoryResponseArray = webClientBuilder.build().get()
 				.uri(
 						inventoryServiceUri,
 						uriBuilder -> uriBuilder.queryParam("sku_code", skuCodeList).build()
