@@ -15,6 +15,7 @@ import dev.adil.orderservice.dto.OrderRequest;
 import dev.adil.orderservice.dto.OrderResponse;
 import dev.adil.orderservice.exception.OutOfStockException;
 import dev.adil.orderservice.service.OrderService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 
 @RestController
 @RequestMapping("/api/v1/orders")
@@ -24,6 +25,7 @@ public class OrderController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
+	@CircuitBreaker(name = "inventory", fallbackMethod = "fallbackMethod ")
 	public String placeOrder(@RequestBody OrderRequest orderRequest) {
 		try {
 			orderService.addOrder(orderRequest);
@@ -37,5 +39,9 @@ public class OrderController {
 	@ResponseStatus(HttpStatus.OK)
 	public List<OrderResponse> getAllOrders(){
 		return orderService.getAllOrders();
+	}
+	
+	public String fallbackMethod(OrderRequest orderRequest, RuntimeException ex) {
+		return "Oops! Something went wrong, please try again after some time.";
 	}
 }
