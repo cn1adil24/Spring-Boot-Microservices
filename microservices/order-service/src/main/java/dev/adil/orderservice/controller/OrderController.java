@@ -1,6 +1,7 @@
 package dev.adil.orderservice.controller;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,12 +27,12 @@ public class OrderController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	@CircuitBreaker(name = "inventory", fallbackMethod = "fallbackMethod ")
-	public String placeOrder(@RequestBody OrderRequest orderRequest) {
+	public CompletableFuture<String> placeOrder(@RequestBody OrderRequest orderRequest) {
 		try {
 			orderService.addOrder(orderRequest);
-			return "Order placed successfully";
+			return CompletableFuture.supplyAsync(() -> "Order placed successfully");
 		} catch(OutOfStockException ex) {
-			return ex.getMessage();
+			return CompletableFuture.supplyAsync(() -> ex.getMessage());
 		}
 	}
 	
@@ -41,7 +42,7 @@ public class OrderController {
 		return orderService.getAllOrders();
 	}
 	
-	public String fallbackMethod(OrderRequest orderRequest, RuntimeException ex) {
-		return "Oops! Something went wrong, please try again after some time.";
+	public CompletableFuture<String> fallbackMethod(OrderRequest orderRequest, RuntimeException ex) {
+		return CompletableFuture.supplyAsync(() -> "Oops! Something went wrong, please try again after some time.");
 	}
 }
